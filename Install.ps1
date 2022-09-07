@@ -78,6 +78,9 @@ param
     [Parameter(HelpMessage = 'Do not create desktop shortcut.')]
     [switch]$no_shortcut,
     
+    [Parameter(HelpMessage = 'Use bts patch.')]
+    [switch]$bts,
+    
     [Parameter(HelpMessage = 'Select the desired language to use for installation. Default is the detected system language.')]
     [Alias('l')]
     [string]$Language
@@ -162,9 +165,9 @@ function Format-LanguageCode {
 function CallLang($clg) {
 
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    C:\Users\Ps1\Documents\GitHub\SpotX\scripts\installer-lang
     $urlLang = "https://raw.githubusercontent.com/SrGobi/SpotX/main/scripts/installer-lang/$clg.ps1"
     $ProgressPreference = 'SilentlyContinue'
+    
     try {
 (Invoke-WebRequest -useb $urlLang).Content | Invoke-Expression 
     }
@@ -255,7 +258,7 @@ if ($line) {
 }
 
 # Sending a statistical web query to cutt.ly
-#$ErrorActionPreference = 'SilentlyContinue'
+$ErrorActionPreference = 'SilentlyContinue'
 $cutt_url = "https://cutt.ly/DK8UQub"
 try {
     $ProgressPreference = 'SilentlyContinue'
@@ -538,11 +541,13 @@ if ($premium) {
     Write-Host ($lang).Prem`n
 }
 if (!($premium)) {
-    downloadScripts -param1 "BTS"
-    Add-Type -Assembly 'System.IO.Compression.FileSystem'
-    $zip = [System.IO.Compression.ZipFile]::Open("$PWD\chrome_elf.zip", 'read')
-    [System.IO.Compression.ZipFileExtensions]::ExtractToDirectory($zip, $PWD)
-    $zip.Dispose()
+    if ($bts) {
+        downloadScripts -param1 "BTS"
+        Add-Type -Assembly 'System.IO.Compression.FileSystem'
+        $zip = [System.IO.Compression.ZipFile]::Open("$PWD\chrome_elf.zip", 'read')
+        [System.IO.Compression.ZipFileExtensions]::ExtractToDirectory($zip, $PWD)
+        $zip.Dispose()
+    }
 }
 downloadScripts -param1 "links.tsv"
 
@@ -725,7 +730,7 @@ if ($leveldb) {
 }
 
 # Create backup chrome_elf.dll
-if (!(Test-Path -LiteralPath $chrome_elf_bak) -and !($premium)) {
+if (!(Test-Path -LiteralPath $chrome_elf_bak) -and !($premium) -and $bts) {
     Move-Item $chrome_elf $chrome_elf_bak 
 }
 
@@ -855,13 +860,26 @@ function Helper($paramname) {
         }
         "OffadsonFullscreen" { 
             $offadson_fullscreen = @{
-                EmptyBlockAd        = 'adsEnabled:!0', 'adsEnabled:!1' # Removing an empty block
-                FullScreenAd        = '(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===', '$1"premium"===$2$3"free"===' # Fullscreen act., removing upgrade menu, button
-                PlaylistSponsorsOff = 'allSponsorships' , '' # Disabling a playlist sponsor
-                ConnectUnlock       = ' connect-device-list-item--disabled' , '' # Connect unlock test for 1.1.91
-                ConnectUnlock2      = 'connect-picker.unavailable-to-control' , 'spotify-connect'
-                ConnectUnlock3      = '(className:.,disabled:)(..)' , '$1false'
-                ConnectUnlock4      = 'return (..isDisabled)(\?..createElement\(..,)' , 'return false$2'
+                # Removing a billboard on the homepage
+                Bilboard            = '.(\?\[..\(..leaderboard,)', 'false$1' 
+                # Removing audio ads
+                AidioAds            = '(case .:)return this.enabled=...+?(;case .:this.subscription=this.audioApi).+?(;case .)', '$1$2.cosmosConnector.increaseStreamTime(-100000000000)$3'
+                # Removing an empty block
+                EmptyBlockAd        = 'adsEnabled:!0', 'adsEnabled:!1'
+                # Fullscreen act., removing upgrade menu, button
+                FullScreenAd        = '(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===', '$1"premium"===$2$3"free"==='
+                # Disabling a playlist sponsor
+                PlaylistSponsorsOff = 'allSponsorships', ''
+                # Connect unlock test for 1.1.91 >
+                ConnectUnlock       = ' connect-device-list-item--disabled', ''
+                ConnectUnlock2      = 'connect-picker.unavailable-to-control', 'spotify-connect'
+                ConnectUnlock3      = '(className:.,disabled:)(..)', '$1false'
+                ConnectUnlock4      = 'return (..isDisabled)(\?..createElement\(..,)', 'return false$2'
+                # Removing the track download quality switch
+                DownloadQuality     = 'xe\(...\)\)\)\)...createElement\(....{filterMatchQuery:.....get\(.desktop.settings.downloadQuality.title.\).+?xe', 'xe'
+            }
+            if ($bts) {
+                $offadson_fullscreen.Remove('Bilboard'), $offadson_fullscreen.Remove('AidioAds')
             }
             #if (!($testconnect)) {
             #    $offadson_fullscreen.Remove('ConnectUnlock'), $offadson_fullscreen.Remove('ConnectUnlock2'),
@@ -874,7 +892,8 @@ function Helper($paramname) {
         "OffPodcasts" {  
             # Turn off podcasts
             $podcasts_off = @{
-                PodcastsOff = '(Array.isArray\(o\)&&0===..length)', '$1||l==="spotify:section:0JQ5DAnM3wGh0gz1MXnu9e"||l==="spotify:section:0JQ5DAob0KawTDUxBEiEIF"'
+                PodcastsOff  = '(Array.isArray\(.\)&&0===..length)', '$1||l==="spotify:section:0JQ5DAnM3wGh0gz1MXnu9e"||l==="spotify:section:0JQ5DAob0KawTDUxBEiEIF"'
+                PodcastsOff2 = '(.=..UBIWrapper;)(return)', '$1 if(n==="spotify:section:0JQ5DAnM3wGh0gz1MXnu9e"||n==="spotify:section:0JQ5DAob0KawTDUxBEiEIF") return null; $2'
             }
             $n = ($lang).NoVariable2
             $contents = $podcasts_off
@@ -978,6 +997,8 @@ function Helper($paramname) {
                 ExpFeatures16 = '(Enable the new home structure and navigation",default:)(!1)', '$1!0'
                 ExpFeatures17 = '(Show "Made For You" entry point in the left sidebar.,default:)(!1)', '$1!0'
                 ExpFeatures18 = '(Enable option in settings to clear all downloads",default:)(!1)', '$1!0'
+                # "Create similar playlist" menu is activated for someone else's playlists
+                ExpFeatures19  = ',(.\.isOwnedBySelf&&)(..createElement\(..Fragment,null,..createElement\(.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)' , ',$2$1'
             }
             if ($enhance_like_off) { $exp_features.Remove('ExpFeatures10') }
             if ($enhance_playlist_off) { $exp_features.Remove('ExpFeatures11') }
@@ -991,7 +1012,8 @@ function Helper($paramname) {
                 $exp_features.Remove('ExpFeatures10'), $exp_features.Remove('ExpFeatures11'), 
                 $exp_features.Remove('ExpFeatures12'), $exp_features.Remove('ExpFeatures13'), 
                 $exp_features.Remove('ExpFeatures14'), $exp_features.Remove('ExpFeatures15'), 
-                $exp_features.Remove('ExpFeatures16'), $exp_features.Remove('ExpFeatures17')
+                $exp_features.Remove('ExpFeatures16'), $exp_features.Remove('ExpFeatures17'),
+                $exp_features.Remove('ExpFeatures19')
             }
             $n = ($lang).NoVariable2
             $contents = $exp_features
@@ -1015,7 +1037,7 @@ function Helper($paramname) {
 Write-Host ($lang).ModSpoti`n
 
 # Patching files
-if (!($premium)) {
+if (!($premium) -and $bts) {
     $patchFiles = "$PWD\chrome_elf.dll", "$PWD\config.ini"
     Copy-Item -LiteralPath $patchFiles -Destination "$spotifyDirectory"
 }
@@ -1159,6 +1181,8 @@ if (Test-Path $xpui_js_patch) {
         $writer.Write([System.Environment]::NewLine + ' .BKsbV2Xl786X9a09XROH{display:none}')
         # Hide submenu item "download"
         $writer.Write([System.Environment]::NewLine + ' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA{display:none}')
+        # Hide very high quality streaming
+        $writer.Write([System.Environment]::NewLine + ' #desktop\.settings\.streamingQuality>option:nth-child(5) {display:none}')
     }
     # new UI fix
     if ($enablenavalt) {
@@ -1285,6 +1309,27 @@ If (Test-Path $xpui_spa_patch) {
     $writer.Write([System.Environment]::NewLine + '// Patched by SpotX') 
     $writer.Close()
 
+
+    # Add discriptions (xpui-desktop-modals.js)
+    $entry_xpui_desktop_modals = $zip.GetEntry('xpui-desktop-modals.js')
+    $reader = New-Object System.IO.StreamReader($entry_xpui_desktop_modals.Open())
+    $xpuiContents_xpui_desktop_modals = $reader.ReadToEnd()
+    $reader.Close()
+
+    $about = "`$1`"<h3>More about SpotX</h3>`"}),`$1`'<a `
+     href=`"https://github.com/SrGobi/SpotX`">Github</a>`'}),`$1`'<a `
+     href=`"https://github.com/SrGobi/SpotX/discussions/111`">FAQ</a>'}),`$1`'<a `
+     href=`"https://t.me/spotify_windows_mod`">Telegram channel</a>`'}),`$1`'<a `
+     href=`"https://github.com/SrGobi/SpotX/issues/new?assignees=&labels=%E2%9D%8C+bug&template=bug_report.yml`">Create `
+     an issue report</a>`'}),`$1`"<br>`"}),`$1`"<h4>DISCLAIMER</h4>`"}),`$1`"SpotX is a modified version of the official Spotify client, provided as an evaluation version, you use it at your own risk.`"})"
+
+    $xpuiContents_xpui_desktop_modals = $xpuiContents_xpui_desktop_modals `
+        -replace '(..createElement\(....,{source:).....get\("about.copyright",.\),paragraphClassName:.}\)', $about
+    $writer = New-Object System.IO.StreamWriter($entry_xpui_desktop_modals.Open())
+    $writer.BaseStream.SetLength(0)
+    $writer.Write($xpuiContents_xpui_desktop_modals)
+    $writer.Close()
+
     # Disable Sentry (vendor~xpui.js)
     $entry_vendor_xpui = $zip.GetEntry('vendor~xpui.js')
     $reader = New-Object System.IO.StreamReader($entry_vendor_xpui.Open())
@@ -1329,9 +1374,11 @@ If (Test-Path $xpui_spa_patch) {
     $writer.Write($xpuiContents_xpui_css)
     if (!($premium)) {
         # Hide download icon on different pages
-        $writer.Write([System.Environment]::NewLine + ' .BKsbV2Xl786X9a09XROH {display: none}')
+        $writer.Write([System.Environment]::NewLine + ' .BKsbV2Xl786X9a09XROH {display:none}')
         # Hide submenu item "download"
-        $writer.Write([System.Environment]::NewLine + ' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA {display: none}')
+        $writer.Write([System.Environment]::NewLine + ' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA {display:none}')
+        # Hide very high quality streaming
+        $writer.Write([System.Environment]::NewLine + ' #desktop\.settings\.streamingQuality>option:nth-child(5) {display:none}')
     }
      
     # new UI fix
@@ -1345,7 +1392,7 @@ If (Test-Path $xpui_spa_patch) {
     }
     # Hide broken podcast menu
     #if ($podcast_off) { 
-    #$writer.Write([System.Environment]::NewLine + ' li.OEFWODerafYHGp09iLlA [href="/collection/podcasts"] {display: none}')
+    #$writer.Write([System.Environment]::NewLine + ' li.OEFWODerafYHGp09iLlA [href="/collection/podcasts"] {display:none}')
     #}
     $writer.Close()
 
