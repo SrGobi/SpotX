@@ -6,7 +6,7 @@ body:
     id: lang
     attributes:
       label: What language do you want to translate into?
-      description: Also note the already added languages in the <a href="https://github.com/SrGobi/SpotX/discussions/60">Language parameters</a> section
+      description: Also note the already added languages in the <a href="https://github.com/SrGobi/SpotX/discussions">Language parameters</a> section
       placeholder: e.g. English
     validations:
       required: true

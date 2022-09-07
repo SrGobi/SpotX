@@ -1318,7 +1318,7 @@ If (Test-Path $xpui_spa_patch) {
 
     $about = "`$1`"<h3>More about SpotX</h3>`"}),`$1`'<a `
      href=`"https://github.com/SrGobi/SpotX`">Github</a>`'}),`$1`'<a `
-     href=`"https://github.com/SrGobi/SpotX/discussions/111`">FAQ</a>'}),`$1`'<a `
+     href=`"https://github.com/SrGobi/SpotX/discussions`">FAQ</a>'}),`$1`'<a `
      href=`"https://t.me/spotify_windows_mod`">Telegram channel</a>`'}),`$1`'<a `
      href=`"https://github.com/SrGobi/SpotX/issues/new?assignees=&labels=%E2%9D%8C+bug&template=bug_report.yml`">Create `
      an issue report</a>`'}),`$1`"<br>`"}),`$1`"<h4>DISCLAIMER</h4>`"}),`$1`"SpotX is a modified version of the official Spotify client, provided as an evaluation version, you use it at your own risk.`"})"

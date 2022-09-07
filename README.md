@@ -8,46 +8,46 @@
 
 - <strong>OS: Windows 7-11</strong>
 - <strong>Spotify: Recommended official version [1.1.93.896](https://cutt.ly/8EH6NuH)</strong>
-- <strong>For Windows Desktop only (Microsoft store version is not suitable).</strong>
-- <strong>PowerShell: 3 or higher</strong>
+- <strong>Solo para escritorio de Windows (la versión de la tienda de Microsoft no es adecuada).</strong>
+- <strong>PowerShell: 3 o superior</strong>
 
-<h1>Features</h1>
+<h1>Características</h1>
 
-- <strong>Blocks all banner, video and audio ads in the client</strong>
-- <strong>Unlocks the skip function of any track</strong>
-- <strong>Full screen mode activated</strong>
-- <strong>Hidden podcasts and episodes from the homepage (optional)</strong>
-- <strong>Blocks automatic updates (optional)</strong>
-- <strong>Automatic [cache clearing](https://github.com/SrGobi/SpotX/discussions/2) (optional)</strong>
-- <strong>Enabled [enhance playlist](https://github.com/SrGobi/SpotX/discussions/50#discussion-4108773)</strong>
-- <strong>Enabled [enhance liked songs UI](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-2851482)</strong>
-- <strong>Enabled [new lyrics](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-2851485)</strong>
-- <strong>Enabled [a condensed discography shelf on artist pages](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-2851591)</strong>
-- <strong>Enabled [Ignore In Recommendations](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-2996165)</strong>
-- <strong>Enabled [Equalizer](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-3179778)</strong>
-- <strong>Enabled [new device picker panel](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-3179782)</strong>
-- <strong>Activated ["Made For You" in the left sidebar](https://github.com/SrGobi/SpotX/discussions/50#discussioncomment-2853981)</strong>
-- <strong>Disabled Sentry (Prevented Sentry from sending console log/error/warning to Spotify developers)</strong>
-- <strong>Disabled logging (Stopped various elements to log user interaction)</strong>
-- <strong>Removed RTL rules (Removed all right-to-left CSS rules to simplify CSS files)</strong>
-- <strong>Code minification</strong>
+- <strong>Bloquea todos los anuncios publicitarios, de video y de audio en el cliente</strong>
+- <strong>Desbloquea la función de salto de cualquier pista</strong>
+- <strong>Modo de pantalla completa activado</strong>
+- <strong>Podcasts y episodios ocultos de la página de inicio (opcional)</strong>
+- <strong>Bloquea actualizaciones automáticas (opcional)</strong>
+- <strong>[Borrado de caché] automático (https://github.com/SrGobi/SpotX/discussions/1) (opcional)</strong>
+- <strong>Habilitado [mejorar lista de reproducción](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Habilitado [mejorar la interfaz de usuario de canciones favoritas](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Habilitado [nueva letra](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Habilitado [un estante de discografía condensada en las páginas de los artistas](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Habilitado [Ignorar en recomendaciones](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Habilitado [Ecualizador](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Habilitado [nuevo panel de selección de dispositivos](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Activado ["Hecho para ti" en la barra lateral izquierda](https://github.com/SrGobi/SpotX/discussions/2)</strong>
+- <strong>Sentry deshabilitado (Evitado que Sentry envíe el registro/error/advertencia de la consola a los desarrolladores de Spotify)</strong>
+- <strong>Registro deshabilitado (se detuvieron varios elementos para registrar la interacción del usuario)</strong>
+- <strong>Se eliminaron las reglas RTL (se eliminaron todas las reglas CSS de derecha a izquierda para simplificar los archivos CSS)</strong>
+- <strong>minificación de código</strong>
 
-<h1>Fast installation / Update</h1>
-<h3>Choose installation type:</h3>
+<h1>Rápida instalación / Actualización</h1>
+<h3>Elija el tipo de instalación:</h3>
 <details>
-<summary><small>Usual installation</small></summary><p>
+<summary><small>Instalación habitual</small></summary><p>
   
-  #### During installation, you need to confirm some actions, also contains:
+  #### Durante la instalación, debe confirmar algunas acciones, también contiene:
 
-- All [experimental features](https://github.com/SrGobi/SpotX/discussions/50) included
+- Todas las [características experimentales](https://github.com/SrGobi/SpotX/discussions/2) incluido
 
   <h4> </h4>
 
-#### Just download and run [Install.bat](https://raw.githack.com/SrGobi/SpotX/main/Install.bat)
+#### Solo descarga y ejecuta [Install.bat](https://raw.githack.com/SrGobi/SpotX/main/Install.bat)
 
-or
+o
 
-#### Run The following command in PowerShell:
+#### Ejecute el siguiente comando en PowerShell:
 
 ```ps1
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (iwr -useb 'https://raw.githubusercontent.com/SrGobi/SpotX/main/Install.ps1').Content | iex
@@ -56,21 +56,21 @@ or
 </details>
   
 <details>
-<summary><small>Automatic basic installation</small></summary><p>
+<summary><small>Instalación básica automática</small></summary><p>
   
   #### Automatic basic installation without confirmation, what does it do? 
   
-  - Automatic removal of Spotify MS if it was found 
-  - Automatic installation of the recommended version of Spotify (if another client has already been found, it will be installed over)
-  - After the installation is completed, the client will autorun
+  - Eliminación automática de Spotify MS si se encuentra
+  - Instalación automática de la versión recomendada de Spotify (si ya se ha encontrado otro cliente, se instalará encima)
+  - Una vez completada la instalación, el cliente se ejecutará automáticamente
   
 <h4> </h4>
 
-#### Just download and run [Install_Basic.bat](https://raw.githack.com/SrGobi/SpotX/main/scripts/Install_Basic.bat)
+#### Solo descarga y ejecuta [Install_Basic.bat](https://raw.githack.com/SrGobi/SpotX/main/scripts/Install_Basic.bat)
 
-or
+o
 
-#### Run The following command in PowerShell:
+#### Ejecute el siguiente comando en PowerShell:
 
 ```ps1
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $((iwr -useb 'https://raw.githubusercontent.com/SrGobi/SpotX/main/Install.ps1').Content) } -confirm_uninstall_ms_spoti -confirm_spoti_recomended_over -podcasts_on -cache_off -block_update_off -exp_standart -hide_col_icon_off -start_spoti"
@@ -79,24 +79,24 @@ or
 </details>
   
 <details>
-<summary><small>Automatic full installation</small></summary><p>
+<summary><small>Instalación completa automática</small></summary><p>
   
-  <h4>Automatic installation without confirmation, what does it do?</h4> 
+  <h4>Instalación automática sin confirmación, ¿qué hace?</h4> 
   
-  - Automatic removal of Spotify MS if it was found 
-  - Automatic installation of the recommended version of Spotify (if another client has already been found, it will be installed over) 
-  - Removal of podcasts from the main page 
-  - Automatic blocking of Spotify updates
-  - All [experimental features](https://github.com/SrGobi/SpotX/discussions/50) included
-  - After the installation is completed, the client will autorun.
+  - Eliminación automática de Spotify MS si se encuentra
+  - Instalación automática de la versión recomendada de Spotify (si ya se ha encontrado otro cliente, se instalará encima)
+  - Eliminación de podcasts de la página principal
+  - Bloqueo automático de actualizaciones de Spotify
+  - Todas las [características experimentales](https://github.com/SrGobi/SpotX/discussions/2) incluido
+  - Una vez completada la instalación, el cliente se ejecutará automáticamente.
   
 <h4> </h4>
 
-#### Just download and run [Install_Auto.bat](https://raw.githack.com/SrGobi/SpotX/main/scripts/Install_Auto.bat)
+#### Solo descarga y ejecuta [Install_Auto.bat](https://raw.githack.com/SrGobi/SpotX/main/scripts/Install_Auto.bat)
 
-or
+o
 
-#### Run The following command in PowerShell:
+#### Ejecute el siguiente comando en PowerShell:
 
 ```ps1
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $((iwr -useb 'https://raw.githubusercontent.com/SrGobi/SpotX/main/Install.ps1').Content) } -confirm_uninstall_ms_spoti -confirm_spoti_recomended_over -podcasts_off -cache_off -block_update_on -start_spoti"
@@ -104,53 +104,53 @@ or
 
 </details>
 <details>
-<summary><small>Installing with Scoop</small></summary><p>
+<summary><small>Instalación con Scoop</small></summary><p>
   
-  #### Installing SpotX via the Scoop package manager includes:
+  #### La instalación de SpotX a través del administrador de paquetes Scoop incluye:
 
-- Automatic removal of Spotify MS if it was found
-- Automatic installation of the recommended version of Spotify (if another client has already been found, it will be installed over)
-- Removal of podcasts from the main page
-- Automatic blocking of Spotify updates
-- All [experimental features](https://github.com/SrGobi/SpotX/discussions/50) included
+- Eliminación automática de Spotify MS si se encuentra
+- Instalación automática de la versión recomendada de Spotify (si ya se ha encontrado otro cliente, se instalará encima)
+- Eliminación de podcasts de la página principal
+- Bloqueo automático de actualizaciones de Spotify
+- Todas las [características experimentales](https://github.com/SrGobi/SpotX/discussions/2) incluido
 
   <h4> </h4>
 
-#### Installing SpotX with Scoop
+#### Instalación de SpotX con Scoop
 
-Just run these commands in the command prompt or powershell:
+Simplemente ejecute estos comandos en el símbolo del sistema o powershell:
 <br>
 <br>`scoop bucket add nonportable`
 <br>`scoop install spotx-np`
 
-#### Updating SpotX with Scoop
+#### Actualización de SpotX con Scoop
 
-To update SpotX or check for updates run this command in the command prompt or powershell:
+Para actualizar SpotX o buscar actualizaciones, ejecute este comando en el símbolo del sistema o PowerShell:
 
 `scoop update spotx-np`
 
-#### Uninstalling SpotX with Scoop
+#### Desinstalar SpotX con Scoop
 
-To fully uninstall SpotX and Spotify run this command in the command prompt or powershell:
+Para desinstalar por completo SpotX y Spotify, ejecute este comando en el símbolo del sistema o PowerShell:
 
 `scoop uninstall spotx-np`
 
 </details>
 
 <details>
-<summary><small>Installation for premium</small></summary><p>
+<summary><small>Instalación para prima</small></summary><p>
   
-  #### Usual installation only without ad blocking, for those who have a premium account, also contains:
+  #### La instalación habitual solo sin bloqueo de anuncios, para aquellos que tienen una cuenta premium, también contiene:
 
-- All [experimental features](https://github.com/SrGobi/SpotX/discussions/50) included
+- Todas las [características experimentales](https://github.com/SrGobi/SpotX/discussions/2) incluido
 
   <h4> </h4>
 
-#### Just download and run [Install_Prem.bat](https://raw.githack.com/SrGobi/SpotX/main/scripts/Install_Prem.bat)
+#### Solo descarga y ejecuta [Install_Prem.bat](https://raw.githack.com/SrGobi/SpotX/main/scripts/Install_Prem.bat)
 
-or
+o
 
-#### Run The following command in PowerShell:
+#### Ejecute el siguiente comando en PowerShell:
 
 ```ps1
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $((iwr -useb 'https://raw.githubusercontent.com/SrGobi/SpotX/main/Install.ps1').Content) } -premium"
@@ -159,24 +159,24 @@ or
 </details>
 
 <details>
-<summary><small>Installing with parameters</small></summary><p>
+<summary><small>Instalación con parámetros</small></summary><p>
 
-You can specify various parameters for a more flexible installation, more [details here](https://github.com/SrGobi/SpotX/discussions/60)
+Puede especificar varios parámetros para una instalación más flexible, más [detalles aquí](https://github.com/SrGobi/SpotX/discussions)
 
 </details>
 
-<h1>Uninstall</h1>
+<h1>Desinstalar</h1>
 
-- Just run [Uninstall.bat](https://raw.githack.com/SrGobi/SpotX/main/Uninstall.bat)
+- Solo inicia [Uninstall.bat](https://raw.githack.com/SrGobi/SpotX/main/Uninstall.bat)
 
 or
 
-- Reinstall Spotify ([Full uninstall Spotify](https://github.com/SrGobi/Uninstall-Spotify) recommended)
+- Reinstalar Spotify ([Desinstalación completa de Spotify](https://github.com/SrGobi/Uninstall-Spotify) recomendado)
 
 <h1>FAQ</h1>
 
-- Read [FAQ](https://github.com/SrGobi/SpotX/discussions/111)
+- Leer [FAQ](https://github.com/SrGobi/SpotX/discussions)
 
-<h1>Credits</h1>
+<h1>Creditos</h1>
 
-- The repository is based on <a href="https://github.com/mrpond/BlockTheSpot">BlockTheSpot</a>, and also some tricks were taken from <a href="https://github.com/khanhas/spicetify-cli">spicetify-cli</a>, many thanks to the contributors
+- El repositorio se basa en <a href="https://github.com/mrpond/BlockTheSpot">BlockTheSpot</a>, y también se tomaron algunos trucos de <a href="https://github.com/khanhas/spicetify-cli">spicetify-cli</a>, muchas gracias a los contribuyentes

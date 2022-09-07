@@ -1,17 +1,17 @@
 <# 
-Name: Clear Spotify Cache.
+Nombre: Borrar caché de Spotify.
 
-Description: The script clears outdated cache from the listened music in Spotify.
-Fires every time you completely close the client (If the client was minimized to tray then the script will not work).
+Descripción: el script borra el caché desactualizado de la música escuchada en Spotify.
+Se activa cada vez que cierra completamente el cliente (si el cliente se minimizó en la bandeja, el script no funcionará).
 
-For the APPDATA\Spotify\Data folder, the rule is that all cache files that are not used
-by the customer more than the specified number of days will be deleted.
+Para la carpeta APPDATA\Spotify\Data, la regla es que todos los archivos de caché que no se utilizan
+por el cliente más que el número especificado de días serán eliminados.
 
 #>
 
-$day = 7 # Number of days after which the cache is considered stale 
+$day = 7 # Número de días después de los cuales la memoria caché se considera obsoleta
 
-# Clear the \Data folder if it finds an outdated cache
+# Borre la carpeta \Data si encuentra un caché desactualizado
 
 try {
     If (!(Test-Path -Path $env:LOCALAPPDATA\Spotify\Data)) {
